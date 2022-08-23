@@ -27,6 +27,10 @@ pipeline {
                docker build -t ${REPOSITORY_TAG}:${SERVICE_NAME}-1.0 .
                docker push ${REPOSITORY_TAG}:${SERVICE_NAME}-1.0
             """
+            app = docker.build("${REPOSITORY_TAG}:${SERVICE_NAME}-1.0")
+            docker.withRegistry('644435390668.dkr.ecr.eu-central-1.amazonaws.com/yair-fleetman') {
+               app.push("${REPOSITORY_TAG}:${SERVICE_NAME}-1.0")
+        }
          }
       }
 
