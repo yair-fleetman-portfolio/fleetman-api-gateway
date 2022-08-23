@@ -19,7 +19,14 @@ pipeline {
          }
       }
 
+      stage ('test') {
+         steps {
+            echo 'No Tests Yet'
+         }
+      }
+
       stage('Build and Push Image') {
+         when { expression { env.GIT_BRANCH == 'master' } }
          steps {
             script {
                sh """#!/bin/bash
@@ -32,11 +39,17 @@ pipeline {
          }
       }
 
-      // stage('Deploy to Cluster') {
-      //     steps {
-      //               sh 'envsubst < ${WORKSPACE}/deploy.yaml | kubectl apply -f -'
-      //     }
-      // }
+      stage('Trigger update manifests') {
+         when { expression { env.GIT_BRANCH == 'master' } }
+         steps {
+            script {
+               echo '====================================='
+               echo 'Triggering update manifest job'
+               echo '====================================='
+               build job: 'update-fleetman-manifest', parameters: [string(name: 'SERVICE', value: env.SERVICE_NAME)]
+            }
+         }
+      }      
    }
 
    post {
