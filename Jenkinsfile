@@ -25,14 +25,14 @@ pipeline {
          }
       }
 
-      stage('Calc tag') {
-         when { expression { env.GIT_BRANCH == 'master' } }
-         steps {
-            script {
+      // stage('Calc tag') {
+      //    when { expression { env.GIT_BRANCH == 'master' } }
+      //    steps {
+      //       script {
 
-            }
-         }
-      }
+      //       }
+      //    }
+      // }
 
       stage('Build and Push Image') {
          when { expression { env.GIT_BRANCH == 'master' } }
@@ -42,7 +42,7 @@ pipeline {
                   aws ecr get-login-password --region eu-central-1 | \
                   docker login --username AWS --password-stdin 644435390668.dkr.ecr.eu-central-1.amazonaws.com
                   docker build -t ${REPOSITORY_TAG}:${SERVICE_NAME} .
-                  // docker push ${REPOSITORY_TAG}:${SERVICE_NAME}-1.0
+                  # docker push ${REPOSITORY_TAG}:${SERVICE_NAME}-1.0
                   """
             }
          }
