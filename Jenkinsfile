@@ -49,6 +49,8 @@ pipeline {
                build job: 'update-fleetman-manifest', parameters: [string(name: 'SERVICE', value: env.SERVICE_NAME),
                string(name: 'GIT_COMMITTER_NAME', value: env.GIT_COMMITTER_NAME),
                string(name: 'GIT_COMMITTER_EMAIL', value: env.GIT_COMMITTER_EMAIL)
+
+               
                ]
             }
          }
