@@ -25,13 +25,9 @@ pipeline {
                sh """#!/bin/bash
                   aws ecr get-login-password --region eu-central-1 | \
                   docker login --username AWS --password-stdin 644435390668.dkr.ecr.eu-central-1.amazonaws.com
-                  #docker build -t ${REPOSITORY_TAG}:${SERVICE_NAME}-1.0 .
-                  #docker push ${REPOSITORY_TAG}:${SERVICE_NAME}-1.0
+                  docker build -t ${REPOSITORY_TAG}:${SERVICE_NAME}-1.0 .
+                  docker push ${REPOSITORY_TAG}:${SERVICE_NAME}-1.0
                   """
-                  app = docker.build("${REPOSITORY_TAG}:${SERVICE_NAME}-1.0")
-                  docker.withRegistry('644435390668.dkr.ecr.eu-central-1.amazonaws.com/yair-fleetman') {
-                     app.push("${REPOSITORY_TAG}:${SERVICE_NAME}-1.0")
-               }
             }
          }
       }
