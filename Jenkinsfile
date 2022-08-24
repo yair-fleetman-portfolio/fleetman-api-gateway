@@ -19,33 +19,20 @@ pipeline {
          }
       }
 
+      stage('Build Image') {
+         when { expression { env.GIT_BRANCH == 'master' } }
+         steps {
+            script {
+               sh "docker build -t ${REPOSITORY_TAG}:${SERVICE_NAME}-${BUILD_NUMBER} ."
+            }
+         }
+      }
+
       stage ('test') {
          steps {
             echo 'No Tests Yet'
          }
-      }
-
-      // stage('Calc tag') {
-      //    when { expression { env.GIT_BRANCH == 'master' } }
-      //    steps {
-      //       script {
-
-      //       }
-      //    }
-      // }
-
-      stage('Build and Push Image') {
-         when { expression { env.GIT_BRANCH == 'master' } }
-         steps {
-            script {
-               sh """#!/bin/bash
-                  aws ecr get-login-password --region eu-central-1 | \
-                  docker login --username AWS --password-stdin 644435390668.dkr.ecr.eu-central-1.amazonaws.com
-                  docker build -t ${REPOSITORY_TAG}:${SERVICE_NAME}-${BUILD_NUMBER} .
-                  """
-            }
-         }
-      }
+      }      
 
       stage('Trigger update manifests') {
          when { expression { env.GIT_BRANCH == 'master' } }
