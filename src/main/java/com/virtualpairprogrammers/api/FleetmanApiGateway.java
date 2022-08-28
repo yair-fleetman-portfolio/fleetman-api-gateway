@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableFeignClients
 public class FleetmanApiGateway {
 	public static void main(String[] args) {
-		System.setProperty('server.port', '8080');
+		System.setProperty("server.port", "8080");
 		SpringApplication.run(FleetmanApiGateway.class, args);		
 	}	
 }
