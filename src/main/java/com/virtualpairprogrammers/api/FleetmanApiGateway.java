@@ -16,4 +16,3 @@ public class FleetmanApiGateway {
 		SpringApplication.run(FleetmanApiGateway.class, args);		
 	}	
 }
-
